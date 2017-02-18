@@ -1,0 +1,5 @@
+<?php
+$MESS['AKLYKOV_CHECKBOX_DESCRIPTION'] = '"Да/Нет" (Флажок)';
+$MESS['AKLYKOV_CHECKBOX_TITLE_YES'] = 'Да';
+$MESS['AKLYKOV_CHECKBOX_TITLE_NO'] = 'Нет';
+$MESS['AKLYKOV_CHECKBOX_TITLE_EMPTY'] = 'Не установлен';
