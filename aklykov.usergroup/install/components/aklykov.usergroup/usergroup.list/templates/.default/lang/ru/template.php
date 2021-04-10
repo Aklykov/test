@@ -1,0 +1,5 @@
+<?php if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED!==true) die();
+
+$MESS['AKLYKOV_USERGROUP_LIST_ID'] = 'ИД';
+$MESS['AKLYKOV_USERGROUP_LIST_NAME'] = 'Наименование';
+$MESS['AKLYKOV_USERGROUP_LIST_DESCRIPTION'] = 'Описание';
