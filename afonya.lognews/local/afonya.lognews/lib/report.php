@@ -11,28 +11,32 @@ class Report
 		$fio = '';
 		$dirUser = []; // userId => count
 		$dirEvents = [
-			LogTable::EVENT_TYPE__ADD => 0,
-			LogTable::EVENT_TYPE__UPDATE => 0,
-			LogTable::EVENT_TYPE__DELETE => 0,
+			LogTable::EVENT_TYPE__ADD => [],
+			LogTable::EVENT_TYPE__UPDATE => [],
+			LogTable::EVENT_TYPE__DELETE => [],
 		];
 
 		$dateInsert = DateTime::createFromTimestamp(time());
 
 		$rsLog = LogTable::getList([
-			'select' => ['ID', 'USER_ID', 'EVENT_TYPE'],
+			'select' => ['ID', 'USER_ID', 'NEWS_ID', 'EVENT_TYPE'],
 			'filter' => [
 				'<=DATE_INSERT' => $dateInsert
 			]
 		]);
 		while ($arLog = $rsLog->fetch()) {
-			// считаем кол-во событий
-			$dirEvents[$arLog['EVENT_TYPE']] += 1;
+			// считаем кол-во уникальных событий на новость
+			if (!in_array($arLog['NEWS_ID'], $dirEvents[$arLog['EVENT_TYPE']]))
+				$dirEvents[$arLog['EVENT_TYPE']][] = $arLog['NEWS_ID'];
 
 			// считаем кто из юзеров чаще действовал
 			$dirUser[$arLog['USER_ID']] = !isset($dirUser[$arLog['USER_ID']]) ? 1 : ++$dirUser[$arLog['USER_ID']];
 
 			LogTable::delete($arLog['ID']);
 		}
+
+		foreach ($dirEvents as &$event)
+			$event = count($event);
 
 		// определяем ФИО
 		$userId = array_search(max($dirUser), $dirUser);
@@ -48,12 +52,6 @@ class Report
 				$arUser['NAME'],
 			]);
 		}
-
-		$dirEvents = [
-			LogTable::EVENT_TYPE__ADD => 1,
-			LogTable::EVENT_TYPE__UPDATE => 0,
-			LogTable::EVENT_TYPE__DELETE => 3,
-		];
 
 		// готовим письмо
 		$html = '';

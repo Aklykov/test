@@ -150,8 +150,9 @@ class LogTable extends Main\Entity\DataManager
 		$isExist = static::getList([
 			'select' => ['ID'],
 			'filter' => [
-				'NEWS_ID' => $newsId,
-				'EVENT_TYPE' => $type,
+				'=NEWS_ID' => $newsId,
+				'=USER_ID' => $userId,
+				'=EVENT_TYPE' => $type,
 			],
 			'limit' => 1
 		])->getSelectedRowsCount();
