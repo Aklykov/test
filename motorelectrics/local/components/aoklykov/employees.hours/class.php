@@ -215,7 +215,7 @@ class EmployeesHoursComponent extends CBitrixComponent
 		foreach ($items as &$item) {
 			$rows[] = [
 				'ID' => $item['ID'],
-				'FIO' => $item['USER_SHORT_NAME'],
+				'FIO' => '<a href="/company/personal/user/'.$item['USER_ID'].'/">'.$item['USER_SHORT_NAME'].'</a>',
 				'DEPARTMENT' => $depIdDepName[$userIdDepId[$item['USER_ID']]],
 				'PROJECT' => $item['TASK_GROUP_NAME'],
 				'TASK' => $item['TASK_TITLE'],
